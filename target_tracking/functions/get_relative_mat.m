@@ -1,5 +1,6 @@
 function rel_pos = get_relative_mat(S)
-	n = size(S(:, 1));
+	global num_robots;
+	n = num_robots;
 	rel_pos = zeros(n, n, 2);
 	for i = 1:n
 		for j = 1:n

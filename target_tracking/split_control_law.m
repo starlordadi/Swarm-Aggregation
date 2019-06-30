@@ -6,18 +6,19 @@ addpath('functions/');
 %%init
 
 %parameters
-global a = 0.05;
-global w = 3;
-global C1 = 2; global l1 = 0.5; global C2 = 1; global l2 = 1;
-global b = 1.39;
+global lambda a b w C1 l1 C2 l2 betaa num_robots;
+b = 1.39;
+a = 0.05;
+w = 3;
+C1 = 2; l1 = 0.5; C2 = 1; l2 = 1;
 num_robots = 100;
-global betaa = sqrt(5)/10;
+betaa = sqrt(5)/10;
 
 max_iter = 500;
 tsamp = 0.01;
 tspan = [0, tsamp];
 %initialize lambda
-global lambda = 0;
+lambda = 0;
 
 %% initialize swarm agents
 u_ji = zeros(num_robots, 1);
@@ -25,7 +26,7 @@ x = (rand(1, num_robots)*2 - 1);
 y = (rand(1, num_robots)*2 - 1);
 alpha = (rand(1, num_robots)*2 - 1) * (pi/4);
 %% create configuration vector
-S0 = [x, y, alpha]';
+S0 = [x; y; alpha]';
 St = zeros(num_robots, 3);
 Rji_mod = zeros(num_robots, num_robots);
 Rji_vec = zeros(num_robots, num_robots, 2);
@@ -38,9 +39,9 @@ for j = 1:max_iter
 	u_ji = get_uji(Rji_vec, Rji_mod, S0);
 
 	for i = 1:num_robots
-		ui = sum(u_ji(:, i), 2) - u_ji(i, i);
-		[t, x1] = ode45(@split_law, tspan, [S0(i), u(i)]);
-		S0(i) = x1(end, 1:3);
+		ui = sum(u_ji(:, i)) - u_ji(i, i);
+		[t, x1] = ode45(@split_law, tspan, [S0(i, :), ui]);
+		S0(i, :) = x1(end, 1:3);
 	end
 end
 		
