@@ -21,7 +21,9 @@ global lambda = 0;
 
 %% initialize swarm agents
 u_ji = zeros(num_robots, 1);
-
+x = (rand(1, num_robots)*2 - 1);
+y = (rand(1, num_robots)*2 - 1);
+alpha = (rand(1, num_robots)*2 - 1) * (pi/4);
 %% create configuration vector
 S0 = [x, y, alpha]';
 St = zeros(num_robots, 3);
