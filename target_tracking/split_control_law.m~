@@ -14,8 +14,8 @@ C1 = 2; l1 = 0.5; C2 = 1; l2 = 1;
 num_robots = 100;
 betaa = sqrt(5)/10;
 
-max_iter = 500;
-tsamp = 0.1;
+max_iter = 1000;
+tsamp = 0.08;
 tspan = [0, tsamp];
 %initialize lambda
 lambda = 0;
@@ -34,7 +34,7 @@ St = zeros(num_robots, 3);
 %initialize distances matrix
 Rji_mod = zeros(num_robots, num_robots);
 Rji_vec = zeros(num_robots, num_robots, 2);
-%figure('Position', [100, 100, 600, 600], 'visible', 'off');
+
 for j = 1:max_iter
 	j
 	Rji_mod = get_dist_mat(S0);
@@ -49,42 +49,21 @@ for j = 1:max_iter
 	
 	S0(:, 3) = wrapTo180(S0(:, 3));
 
-	if (j > 150 & j < 300)
+	if (j > 75)
 		'splitting'
-		%plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 0, 1]); hold on;
-		% plot(logs(:, 2, j), j*tsamp, '.', 'MarkerSize', 5, 'Color', [0, 0, 1]); hold on;
-  %       xlim([-inf, inf]);
-		% ylim([-inf, inf]);
+		plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 0, 1]); hold on;
+		xlim([-inf, inf]);
+		ylim([-inf, inf]);
 
 		lambda = 0.29;
 	else
-		%plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
-  %       plot(logs(:, 2, j), j*tsamp, '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
-		% xlim([-inf, inf]);
-		% ylim([-inf, inf]);
+		plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
+		xlim([-inf, inf]);
+		ylim([-inf, inf]);
 
 		lambda = 0;
 	end
 
-	% if(mod(j, 50) == 0)
-	% 	figure('Position', [100, 100, 600, 600], 'visible', 'off');
-	% 	plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
-	% 	title(strcat('at time = ', num2str(j/50)), 'fontweight', 'bold');
-	% 	saveas(gcf, strcat('position_at_', num2str(j/50), '_sec.png'));
-	% 	close;
- %    end
-
 end
-
-figure('Position', [100,100,600,600], 'visible', 'off');
-for k = 1:num_robots
-	x_plot(:) = logs(k, 2, :);
-	y_plot(:) = logs(k, 1, :);
-	plot(x_plot, y_plot, '.', 'MarkerSize', 1, 'Color', [0, 0, 1]); hold on;
-end
-saveas(gcf, 'path_2.png');
-close;
-%saveas(gcf, 'y_vs_t.png');
-%close;
 		
 		
