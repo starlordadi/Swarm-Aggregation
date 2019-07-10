@@ -15,4 +15,7 @@ function uji = get_uji(vec, mag, S)
 							+ sum(reshape(vec(j, i, :), [1, 2]).*[-sin(S(i, 3)) cos(S(i, 3))])*lambda*exp(-(abs(sum(reshape(vec(j, i, :), [1, 2]).*[-sin(S(j, 3)) cos(S(j, 3))])) - b)^2/(2 * betaa^2))/mag(j, i);
 			end	
 		end
-	end							
+	end	
+end						
+
+

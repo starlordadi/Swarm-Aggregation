@@ -7,3 +7,4 @@ function dist_mat = get_dist_mat(S)
 		dist_mat(:, j) = diff_mat(:, 1);
 	end
 end
+
