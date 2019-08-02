@@ -13,7 +13,7 @@ w = 3;
 C1 = 2; l1 = 0.5; C2 = 1; l2 = 1;
 num_robots = 100;
 betaa = sqrt(5)/10;
-gamm_a = 0.1;
+gamm_a = 2.2;
 r0 = 0.1;
 
 max_iter = 1000;
@@ -62,7 +62,7 @@ for j = 1:max_iter
 	
 	S0(:, 3) = wrapTo180(S0(:, 3));
 
-	if (j > 200 & j < 600)
+	if (j > 400 & j < 600)
 		'splitting'            
 		%plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 0, 1]); hold on;
 		% plot(logs(:, 2, j), j*tsamp, '.', 'MarkerSize', 5, 'Color', [0, 0, 1]); hold on;
@@ -71,16 +71,16 @@ for j = 1:max_iter
 
 		lambda = 0.29;
 	else
-		%plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
-  %       plot(logs(:, 2, j), j*tsamp, '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
-		% xlim([-inf, inf]);
-		% ylim([-inf, inf]);
+	% % 	%plot(logs(:, 2, j), logs(:, 1, j), '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
+ % %  %       plot(logs(:, 2, j), j*tsamp, '.', 'MarkerSize', 5, 'Color', [0, 1, 0]); hold on;
+	% % 	% xlim([-inf, inf]);
+	% % 	% ylim([-inf, inf]);
 
 		lambda = 0;
 	end
 
-	if (j > 400)
-		b = 3.39;
+	if (j > 500)
+		b = min(2.89, b + 0.0289*(j-500));
 	end
 	% if(mod(j, 50) == 0)
 	% 	figure('Position', [100, 100, 600, 600], 'visible', 'off');
@@ -99,7 +99,7 @@ for k = 1:num_robots
 	y_plot(:) = logs(k, 2, :);
 	plot(x_plot, y_plot, '.', 'MarkerSize', 1, 'Color', [0, 0, 1]); hold on;
 end
-saveas(gcf, 'path_target.png');
+saveas(gcf, 'target_track.png');
 close;
 
 % figure('Position', [100,100,600,600], 'visible', 'off');
